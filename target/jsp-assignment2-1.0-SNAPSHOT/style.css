@@ -59,15 +59,6 @@ nav {
     color: white;
 }
 
-.authentication_button:hover {
-    border: none;
-    background: white;
-}
-
-.authentication_button a:hover {
-    color: #b388ff;
-}
-
 .hero {
     height: 100vh;
     background: white;

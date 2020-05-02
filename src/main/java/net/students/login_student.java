@@ -8,6 +8,7 @@ package net.students;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.rooms.Rooms;
+import net.rooms.RoomsDAO;
 
 
 @WebServlet(name = "login_student", urlPatterns = {"/login_student"})
@@ -32,9 +35,11 @@ public class login_student extends HttpServlet {
      */
     
      private final StudentsDAO studentsDAO;
+     private final RoomsDAO roomsDAO;
 
     public login_student() {
         this.studentsDAO = new StudentsDAO();
+        this.roomsDAO = new RoomsDAO();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -45,9 +50,19 @@ public class login_student extends HttpServlet {
            String password = request.getParameter("password");
            
            Students student = studentsDAO.loginStudent(email, password);
+           List<Rooms> rooms = roomsDAO.selectAllRooms();
+           
            request.setAttribute("user", student);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsection.jsp");
+           request.setAttribute("rooms", rooms);
+            
+            if(student !=null){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("oomsection.jsp");
             dispatcher.forward(request, response);
+            }else{
+                response.sendRedirect("index.html");
+            }
+                
+            
         } catch (SQLException ex) {
              Logger.getLogger(login_student.class.getName()).log(Level.SEVERE, null, ex);
          }

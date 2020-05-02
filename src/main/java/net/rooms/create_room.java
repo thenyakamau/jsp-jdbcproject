@@ -40,19 +40,15 @@ public class create_room extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           
-            out.println("something");
-//             String room_name = request.getParameter("room_name");
-//		String room_type = request.getParameter("room_type");
-//		String room_location = request.getParameter("room_location");
-//		String monthly_charge = request.getParameter("monthly_charge");
-//		String room_status = "unoccupied";
-//		String payment_status = request.getParameter("payment_status");
-//		Rooms room = new Rooms(room_name, room_type, room_location, monthly_charge, room_status, payment_status);
-//                System.out.println(room);
-		//roomsDAO.registerRoom(room);
-		//response.sendRedirect("roomsviewadmin.jsp");
             
+            int id = Integer.parseInt(request.getParameter("id"));
+            String reg_no = request.getParameter("reg_no");
+            String room_status = "booked";
+            
+            roomsDAO.bookRoom(reg_no, room_status, id);
+            response.sendRedirect("index.html");
+        } catch (SQLException ex) {
+            Logger.getLogger(create_room.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
 

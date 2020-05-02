@@ -8,8 +8,10 @@ package net.rooms;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +49,11 @@ public class register_room extends HttpServlet {
 		Rooms room = new Rooms(room_name, room_type, room_location, monthly_charge, room_status, payment_status);
                 System.out.println(room);
 		roomsDAO.registerRoom(room);
-		response.sendRedirect("roomsviewadmin.jsp");
+		 List<Rooms> rooms = roomsDAO.selectAdminRooms();
+           
+           request.setAttribute("rooms", rooms);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsviewadmin.jsp");
+            dispatcher.forward(request, response);
         } catch (SQLException ex) { 
              Logger.getLogger(register_room.class.getName()).log(Level.SEVERE, null, ex);
          } 

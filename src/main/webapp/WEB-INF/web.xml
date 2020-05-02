@@ -20,6 +20,18 @@
         <servlet-name>register_room</servlet-name>
         <servlet-class>net.rooms.register_room</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>edit_room</servlet-name>
+        <servlet-class>net.rooms.edit_room</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>select_room</servlet-name>
+        <servlet-class>net.rooms.select_room</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_room</servlet-name>
+        <servlet-class>net.rooms.delete_room</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register_user</servlet-name>
         <url-pattern>/register_user</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>register_room</servlet-name>
         <url-pattern>/register_room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>edit_room</servlet-name>
+        <url-pattern>/edit_room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>select_room</servlet-name>
+        <url-pattern>/select_room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_room</servlet-name>
+        <url-pattern>/delete_room</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

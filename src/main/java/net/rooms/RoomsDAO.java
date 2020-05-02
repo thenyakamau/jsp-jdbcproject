@@ -25,8 +25,8 @@ public class RoomsDAO {
 	private static final String SELECT_ROOM_BY_ID = "select * from accomodation_rooms where id =?";
 	private static final String SELECT_ALL_ROOMS = "select * from accomodation_rooms";
 	private static final String DELETE_ROOM_SQL = "delete from accomodation_rooms where id = ?;";
-	private static final String UPDATE_ROOM_SQL = "update accomodation_rooms set room_name = ?, room_type = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
-        private static final String BOOK_ROOM_SQL = "update accomodation_rooms set  room_type = ?, reg_no = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
+	private static final String UPDATE_ROOM_SQL = "update accomodation_rooms set room_name = ?, room_type = ?, reg_no = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
+        private static final String BOOK_ROOM_SQL = "update accomodation_rooms set  reg_no = ?, room_status = ?  where id = ?;";
 	
 	public RoomsDAO() {
 		
@@ -75,10 +75,12 @@ public class RoomsDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ROOM_SQL);) {
                     preparedStatement.setString(1, room.getRoom_name());
                     preparedStatement.setString(2, room.getRoom_type());
-			preparedStatement.setString(3, room.getRoom_location());
-			preparedStatement.setString(4, room.getMonthly_charge());
-			preparedStatement.setString(5, room.getRoom_status());
-			preparedStatement.setString(6, room.getPayment_status());
+                     preparedStatement.setString(3, room.getReg_no());
+			preparedStatement.setString(4, room.getRoom_location());
+			preparedStatement.setString(5, room.getMonthly_charge());
+			preparedStatement.setString(6, room.getRoom_status());
+			preparedStatement.setString(7, room.getPayment_status());
+                        preparedStatement.setInt(8, room.getId());
 
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		}
@@ -88,16 +90,13 @@ public class RoomsDAO {
         
             
 	//update room
-	public boolean bookRoom(Rooms room) throws SQLException {
+	public boolean bookRoom(String reg_no, String room_status, int id) throws SQLException {
 		boolean rowUpdated;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(BOOK_ROOM_SQL);) {
-			preparedStatement.setString(1, room.getRoom_type());
-                        preparedStatement.setString(2, room.getReg_no());
-			preparedStatement.setString(3, room.getRoom_location());
-			preparedStatement.setString(4, room.getMonthly_charge());
-			preparedStatement.setString(5, room.getRoom_status());
-			preparedStatement.setString(6, room.getPayment_status());
+			preparedStatement.setString(1, reg_no);
+                        preparedStatement.setString(2, room_status);
+                        preparedStatement.setInt(3, id);
 
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		}
@@ -106,7 +105,7 @@ public class RoomsDAO {
 	
        
 	//select room
-	public Rooms selectStudent(int id) {
+	public Rooms selectRoom(int id) {
 		Rooms room = null;
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
@@ -135,7 +134,7 @@ public class RoomsDAO {
 	}
 	
 	//select all students
-	public List<Rooms> selectAllStudents() {
+	public List<Rooms> selectAllRooms() {
 
 		// using try-with-resources to avoid closing resources (boiler plate code)
 		List<Rooms> room = new ArrayList<>();
@@ -158,6 +157,42 @@ public class RoomsDAO {
 				String monthly_charge = rs.getString("monthly_charge");
 				String room_status = rs.getString("room_status");
 				String payment_status = rs.getString("payment_status");
+                                if(!room_status.equals("booked")){
+                                    if(!room_status.equals("available"))
+				room.add(new Rooms(id,room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status));
+                                }
+			}
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+		return room;
+	}
+        
+        //select all students
+	public List<Rooms> selectAdminRooms() {
+
+		// using try-with-resources to avoid closing resources (boiler plate code)
+		List<Rooms> room = new ArrayList<>();
+		// Step 1: Establishing a Connection
+		try (Connection connection = getConnection();
+
+				// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ROOMS);) {
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			ResultSet rs = preparedStatement.executeQuery();
+
+			// Step 4: Process the ResultSet object.
+			while (rs.next()) {
+				int id = rs.getInt("id");
+                                String room_name = rs.getString("room_name");
+				String room_type = rs.getString("room_type");
+				String reg_no = rs.getString("reg_no");
+				String room_location = rs.getString("room_location");
+				String monthly_charge = rs.getString("monthly_charge");
+				String room_status = rs.getString("room_status");
+				String payment_status = rs.getString("payment_status");
+                                
 				room.add(new Rooms(id,room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status));
 			}
 		} catch (SQLException e) {
@@ -166,7 +201,7 @@ public class RoomsDAO {
 		return room;
 	}
 
-	public boolean deleteUser(int id) throws SQLException {
+	public boolean deleteRoom(int id) throws SQLException {
 		boolean rowDeleted;
 		try (Connection connection = getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ROOM_SQL);) {

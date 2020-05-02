@@ -8,12 +8,16 @@ package net.admin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.rooms.Rooms;
+import net.rooms.RoomsDAO;
 import net.students.Students;
 
 public class register_admin extends HttpServlet {
@@ -29,9 +33,11 @@ public class register_admin extends HttpServlet {
      */
     
     AdminDAO adminDAO;
+    private final RoomsDAO roomsDAO;
     
     public register_admin() {
         this.adminDAO = new AdminDAO();
+        this.roomsDAO = new RoomsDAO();
     }
     
     
@@ -46,7 +52,12 @@ public class register_admin extends HttpServlet {
 		Admin admin = new Admin(teac_no, teac_name, authority,  password);
                 
 		adminDAO.registerAdmin(admin);
-		response.sendRedirect("chooseroom.html");
+                List<Rooms> rooms = roomsDAO.selectAdminRooms();
+           
+           request.setAttribute("user", admin);
+           request.setAttribute("rooms", rooms);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsviewadmin.jsp");
+            dispatcher.forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(register_admin.class.getName()).log(Level.SEVERE, null, ex);
         }

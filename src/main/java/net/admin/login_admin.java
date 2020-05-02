@@ -8,6 +8,7 @@ package net.admin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.rooms.Rooms;
+import net.rooms.RoomsDAO;
 
 public class login_admin extends HttpServlet {
 
@@ -29,9 +32,11 @@ public class login_admin extends HttpServlet {
      */
     
      AdminDAO adminDAO;
+     private final RoomsDAO roomsDAO;
     
     public login_admin() {
         this.adminDAO = new AdminDAO();
+        this.roomsDAO = new RoomsDAO();
     }
     
     
@@ -43,9 +48,22 @@ public class login_admin extends HttpServlet {
            String password = request.getParameter("password");
            
            Admin admin = adminDAO.loginAdmin(teac_no, password);
+           
+         
+           List<Rooms> rooms = roomsDAO.selectAdminRooms();
+           
+            
+               //response.sendRedirect("index.html");
+       
            request.setAttribute("user", admin);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("chooseroom.html");
+           request.setAttribute("rooms", rooms);
+            if(admin !=null){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsviewadmin.jsp");
             dispatcher.forward(request, response);
+            }else{
+                response.sendRedirect("index.html");
+            }
+                    
         } catch (SQLException ex) {
              Logger.getLogger(login_admin.class.getName()).log(Level.SEVERE, null, ex);
          }

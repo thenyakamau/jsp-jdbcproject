@@ -8,12 +8,16 @@ package net.students;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.rooms.Rooms;
+import net.rooms.RoomsDAO;
 
 public class register_user extends HttpServlet {
 
@@ -28,9 +32,11 @@ public class register_user extends HttpServlet {
      */
     
     private final StudentsDAO studentsDAO;
+    private final RoomsDAO roomsDAO;
 
     public register_user() {
         this.studentsDAO = new StudentsDAO();
+        this.roomsDAO = new RoomsDAO();
     }
     
     
@@ -49,7 +55,12 @@ public class register_user extends HttpServlet {
 		Students student = new Students(reg_no, fname, lname, email, gender, number, password);
                 
 		studentsDAO.registerNewStudent(student);
-		response.sendRedirect("chooseroom.html");
+		List<Rooms> rooms = roomsDAO.selectAllRooms();
+           
+           request.setAttribute("user", student);
+           request.setAttribute("rooms", rooms);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsection.jsp");
+            dispatcher.forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(register_user.class.getName()).log(Level.SEVERE, null, ex);
         }

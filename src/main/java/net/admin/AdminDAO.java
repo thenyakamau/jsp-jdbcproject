@@ -55,7 +55,7 @@ public class AdminDAO {
 			preparedStatement.setString(2, admin.getTeac_name());
 			preparedStatement.setString(3, admin.getAuthority());
 			preparedStatement.setString(4, admin.getPassword());
-			System.out.println(preparedStatement);
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			printSQLException(e);
