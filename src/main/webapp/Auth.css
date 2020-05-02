@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    height: 100vh;
+    background-image: url("auth.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.form_link {
+    float: right;
+    color: #04704f;
+    font-size: 20px;
+    margin-bottom: 30px;
+}

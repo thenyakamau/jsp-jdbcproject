@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <servlet>
+        <servlet-name>register_user</servlet-name>
+        <servlet-class>net.students.register_user</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>register_admin</servlet-name>
+        <servlet-class>net.admin.register_admin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>login_admin</servlet-name>
+        <servlet-class>net.admin.login_admin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>register_user</servlet-name>
+        <url-pattern>/register_user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>register_admin</servlet-name>
+        <url-pattern>/register_admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login_admin</servlet-name>
+        <url-pattern>/login_admin</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

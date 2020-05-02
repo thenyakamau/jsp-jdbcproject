@@ -1,0 +1,87 @@
+.rooms_section {
+    margin: 10px;
+    border: .8rem;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(auto, 60px)) .5fr;
+    grid-gap: 60px;
+}
+
+.rooms_section section {
+    margin-top: 30px;
+    grid-column: 3 / span 12;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(auto, 60px));
+    grid-gap: 60px;
+}
+
+.card {
+  grid-column-end: span 4;
+   display: flex;
+   flex-direction: column;
+   cursor: pointer;
+   transition: all 0.3s ease 0s;
+   height: 100%;
+}
+
+.card-header {
+  text-align: center;
+}
+
+.card-body {
+  display: block;
+}
+
+.info {
+  display: flex;
+}
+
+.info label{
+  float: left;
+}
+
+.info p{
+  margin-left: 200px
+}
+
+@media screen and (max-width: 1600px) {
+    .rooms_section {
+        grid-gap: 20px;
+    }
+    .rooms_section section {
+        grid-column: 2 / span 12;
+        grid-template-columns: repeat(12, minmax(auto, 40px));
+        margin-right: 10px;
+    }
+    .card_buttons .button {
+        float: right;
+        margin-left: 100px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .rooms_section {
+        grid-gap: 20px;
+    }
+    .rooms_section section {
+        grid-gap: 20px;
+        grid-column: 2 / span 12;
+        grid-template-columns: repeat(12, minmax(auto, 60px));
+        margin-right: 10px;
+    }
+    .card {
+        grid-column-end: span 6;
+    }
+}
+
+@media screen and (max-width: 899px) {
+    .card {
+        grid-column-end: span 12;
+    }
+    .card_buttons {
+        justify-content: space-around;
+    }
+    .card_buttons .button {
+        float: none;
+        margin-left: 0px;
+    }
+}
