@@ -44,15 +44,15 @@ public class edit_room extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
          
-             
-           String room_name = request.getParameter("room_name");
+                int id = Integer.parseInt(request.getParameter("id"));
+                String room_name = request.getParameter("room_name");
 		String room_type = request.getParameter("room_type");
                 String reg_no = request.getParameter("reg_no");
 		String room_location = request.getParameter("room_location");
 		String monthly_charge = request.getParameter("monthly_charge");
 		String room_status = request.getParameter("room_status");
 		String payment_status = request.getParameter("payment_status");
-		Rooms room = new Rooms(room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status);
+		Rooms room = new Rooms(id, room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status);
                 
 		roomsDAO.updateRoom(room);
 		 List<Rooms> rooms = roomsDAO.selectAdminRooms();
@@ -60,10 +60,11 @@ public class edit_room extends HttpServlet {
            request.setAttribute("rooms", rooms);
             RequestDispatcher dispatcher = request.getRequestDispatcher("roomsviewadmin.jsp");
             dispatcher.forward(request, response);
-            
-        } catch (SQLException ex) {
+
+
+        } catch (SQLException ex) { 
              Logger.getLogger(edit_room.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

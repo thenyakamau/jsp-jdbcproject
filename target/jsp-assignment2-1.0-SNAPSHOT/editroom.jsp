@@ -65,7 +65,7 @@
                       <fieldset>
 
                         <label>Student No.</label>
-                        <input value= "<c:out value='${rooms.reg_no}' />" name="reg_no" type="text" tabindex="1" required autofocus />
+                        <input value= "<c:out value='${rooms.reg_no}' />" name="reg_no" type="text" tabindex="1" />
                     </fieldset>
 
                     <fieldset>
@@ -77,10 +77,13 @@
                         <label>Payment Status</label>
                         <input placeholder="Enter payment status" value= "<c:out value='${rooms.payment_status}' />" name="payment_status" type="text" tabindex="2" required />
                     </fieldset>
+                    
+                      
+                        <input style="display:none" placeholder="Enter payment status" value= "<c:out value='${rooms.id}' />" name="id" type="text" tabindex="2" required />
 
                     <fieldset>
                         <center>
-                            <button class="authentication_button" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Create Room</button>
+                            <button class="authentication_button" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Edit Room</button>
                         </center>
                     </fieldset>
         </form>
