@@ -56,7 +56,7 @@ public class login_student extends HttpServlet {
            request.setAttribute("rooms", rooms);
             
             if(student !=null){
-            RequestDispatcher dispatcher = request.getRequestDispatcher("oomsection.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsection.jsp");
             dispatcher.forward(request, response);
             }else{
                 response.sendRedirect("index.html");
