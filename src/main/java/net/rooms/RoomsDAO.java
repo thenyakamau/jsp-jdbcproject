@@ -19,14 +19,14 @@ public class RoomsDAO {
 	private String jdbcUsername = "root";
 	private String jdbcPassword = "";
 	
-	private static final String INSERT_ROOM_SQL = "INSERT INTO accomodation_rooms" + "  (room_type, room_location, monthly_charge, room_status, payment_status) VALUES "
-			+ " (?, ?, ?, ?, ?);";
+	private static final String INSERT_ROOM_SQL = "INSERT INTO accomodation_rooms" + "  (room_name,room_type, room_location, monthly_charge, room_status, payment_status) VALUES "
+			+ " (?,?, ?, ?, ?, ?);";
 
 	private static final String SELECT_ROOM_BY_ID = "select * from accomodation_rooms where id =?";
 	private static final String SELECT_ALL_ROOMS = "select * from accomodation_rooms";
 	private static final String DELETE_ROOM_SQL = "delete from accomodation_rooms where id = ?;";
-	private static final String UPDATE_ROOM_SQL = "update accomodation_rooms set room_type = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
-        private static final String BOOK_ROOM_SQL = "update accomodation_rooms set room_type = ?, reg_no = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
+	private static final String UPDATE_ROOM_SQL = "update accomodation_rooms set room_name = ?, room_type = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
+        private static final String BOOK_ROOM_SQL = "update accomodation_rooms set  room_type = ?, reg_no = ?, room_location = ?, monthly_charge = ?,room_status= ?, payment_status = ?  where id = ?;";
 	
 	public RoomsDAO() {
 		
@@ -52,11 +52,12 @@ public class RoomsDAO {
 	public void registerRoom(Rooms room) throws SQLException {
 		
 		try(Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROOM_SQL)){
-			preparedStatement.setString(1, room.getRoom_type());
-			preparedStatement.setString(2, room.getRoom_location());
-			preparedStatement.setString(3, room.getMonthly_charge());
-			preparedStatement.setString(4, room.getRoom_status());
-			preparedStatement.setString(5, room.getPayment_status());
+                    preparedStatement.setString(1, room.getRoom_name());
+                    preparedStatement.setString(2, room.getRoom_type());
+			preparedStatement.setString(3, room.getRoom_location());
+			preparedStatement.setString(4, room.getMonthly_charge());
+			preparedStatement.setString(5, room.getRoom_status());
+			preparedStatement.setString(6, room.getPayment_status());
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -72,11 +73,12 @@ public class RoomsDAO {
 		boolean rowUpdated;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ROOM_SQL);) {
-			preparedStatement.setString(1, room.getRoom_type());
-			preparedStatement.setString(2, room.getRoom_location());
-			preparedStatement.setString(3, room.getMonthly_charge());
-			preparedStatement.setString(4, room.getRoom_status());
-			preparedStatement.setString(5, room.getPayment_status());
+                    preparedStatement.setString(1, room.getRoom_name());
+                    preparedStatement.setString(2, room.getRoom_type());
+			preparedStatement.setString(3, room.getRoom_location());
+			preparedStatement.setString(4, room.getMonthly_charge());
+			preparedStatement.setString(5, room.getRoom_status());
+			preparedStatement.setString(6, room.getPayment_status());
 
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 		}
@@ -117,13 +119,14 @@ public class RoomsDAO {
 
 			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
+                            String room_name = rs.getString("room_name");
 				String room_type = rs.getString("room_type");
 				String reg_no = rs.getString("reg_no");
 				String room_location = rs.getString("room_location");
 				String monthly_charge = rs.getString("monthly_charge");
 				String room_status = rs.getString("room_status");
 				String payment_status = rs.getString("payment_status");
-				room = new Rooms(id, room_type, reg_no, room_location, monthly_charge, room_status, payment_status);
+				room = new Rooms(id, room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status);
 			}
 		} catch (SQLException e) {
 			printSQLException(e);
@@ -148,13 +151,14 @@ public class RoomsDAO {
 			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
 				int id = rs.getInt("id");
+                                String room_name = rs.getString("room_name");
 				String room_type = rs.getString("room_type");
 				String reg_no = rs.getString("reg_no");
 				String room_location = rs.getString("room_location");
 				String monthly_charge = rs.getString("monthly_charge");
 				String room_status = rs.getString("room_status");
 				String payment_status = rs.getString("payment_status");
-				room.add(new Rooms(id, room_type, reg_no, room_location, monthly_charge, room_status, payment_status));
+				room.add(new Rooms(id,room_name, room_type, reg_no, room_location, monthly_charge, room_status, payment_status));
 			}
 		} catch (SQLException e) {
 			printSQLException(e);

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose room</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <link href="./rooms.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    
+   
+
+  <nav>
+        <div class="nav_header">
+            <a href="./">Student accomodation</a>
+        </div>
+
+        <div class="authentication_layout">
+
+
+
+        </div>
+    </nav>
+    
+   
+
+    <div class="container">
+        <form method="POST" action ="register_room"  id="contact">
+              <div class="card-header">
+        
+        <p>Add Room</p>
+        
+    </div>
+
+            <fieldset>
+                <label>Room Name</label>
+                <input placeholder="Enter room name" name="room_name" type="text" tabindex="1" required autofocus />
+            </fieldset>
+            <fieldset>
+
+                <fieldset>
+
+                    <label>Room Location</label>
+                    <input placeholder="Enter room location" name="room_location" type="text" tabindex="1" required autofocus />
+                </fieldset>
+                <fieldset>
+                    <fieldset>
+
+                        <label>Room Type</label>
+                        <input placeholder="Enter room type" name="room_type" type="text" tabindex="1" required autofocus />
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Monthly Charge</label>
+                        <input placeholder="Enter monthly charge" name="monthly_charge" type="text" tabindex="2" required />
+                    </fieldset>
+                    
+                     <fieldset>
+                        <label>Payment Status</label>
+                        <input placeholder="Enter payment status" name="payment_status" type="text" tabindex="2" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <center>
+                            <button class="authentication_button" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Create Room</button>
+                        </center>
+                    </fieldset>
+                 
+
+        </form>
+    </div>
+</body>
+
+</html>

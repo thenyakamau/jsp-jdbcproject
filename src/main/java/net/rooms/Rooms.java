@@ -8,6 +8,7 @@ package net.rooms;
 public class Rooms {
     
     private int id;
+    private String room_name;
     private String room_type;
     private String reg_no;
     private String room_location;
@@ -15,8 +16,9 @@ public class Rooms {
     private String room_status;
     private String payment_status;
 
-    public Rooms(int id, String room_type, String reg_no, String room_location, String monthly_charge, String room_status, String payment_status) {
+    public Rooms(int id, String room_name, String room_type, String reg_no, String room_location, String monthly_charge, String room_status, String payment_status) {
         this.id = id;
+        this.room_name = room_name;
         this.room_type = room_type;
         this.reg_no = reg_no;
         this.room_location = room_location;
@@ -25,7 +27,8 @@ public class Rooms {
         this.payment_status = payment_status;
     }
 
-    public Rooms(String room_type, String reg_no, String room_location, String monthly_charge, String room_status, String payment_status) {
+    public Rooms(String room_name, String room_type, String reg_no, String room_location, String monthly_charge, String room_status, String payment_status) {
+        this.room_name = room_name;
         this.room_type = room_type;
         this.reg_no = reg_no;
         this.room_location = room_location;
@@ -34,8 +37,8 @@ public class Rooms {
         this.payment_status = payment_status;
     }
 
-    public Rooms(int id, String room_type, String room_location, String monthly_charge, String room_status, String payment_status) {
-        this.id = id;
+    public Rooms(String room_name, String room_type, String room_location, String monthly_charge, String room_status, String payment_status) {
+        this.room_name = room_name;
         this.room_type = room_type;
         this.room_location = room_location;
         this.monthly_charge = monthly_charge;
@@ -50,6 +53,16 @@ public class Rooms {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getRoom_name() {
+        return room_name;
+    }
+
+    public void setRoom_name(String room_name) {
+        this.room_name = room_name;
+    }
+    
+    
 
     public String getRoom_type() {
         return room_type;

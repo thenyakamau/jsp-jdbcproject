@@ -46,7 +46,7 @@ public class login_student extends HttpServlet {
            
            Students student = studentsDAO.loginStudent(email, password);
            request.setAttribute("user", student);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("chooseroom.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("roomsection.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
              Logger.getLogger(login_student.class.getName()).log(Level.SEVERE, null, ex);
